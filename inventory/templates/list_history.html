@@ -227,16 +227,8 @@
       {% endif %}
       <div class="bg-body-secondary p-5 rounded">
         <div class="header">{{title}}</div>
-        <form method="POST" action="">
-          {% csrf_token %} {{form|crispy}}
-          <input class="btn btn-primary" type="submit" value="Search" />
-        </form>
         <br />
-        {% if show_alert %}
-        <div class="alert alert-warning" role="alert">
-          No items found matching the search criteria.
-        </div>
-        {% elif queryset %}
+
         <div class="display_table">
           <table class="table">
             <thead>
@@ -245,28 +237,25 @@
                 <th>CATEGORY</th>
                 <th>ITEM NAME</th>
                 <th>QUANTITY IN STORE</th>
-                <th>REORDER LEVEL</th>
+                <th>ISSUE QUANTITY</th>
+                <th>RECEIVE QUANTITY</th>
+                <th>RECEIVE BY</th>
+                <th>ISSUE TO</th>
                 <th>LAST UPDATED</th>
-                <th>ACTION</th>
               </tr>
             </thead>
             {% for instance in queryset %}
             <tr>
               <td>{{forloop.counter}}</td>
               <td>{{instance.category}}</td>
-              <td class="item_name"><a href="{% url 'stock_details' instance.id %}">{{instance.item_name}}</a></td>
-              <td>
-                {% if instance.quantity <= instance.reorder_level %}
-                <div>
-                  <div class="badge text-bg-danger">{{instance.quantity}}</div>
-                </div>
-                {% else %}
-                  <div>{{instance.quantity}}</div>
-                {% endif %}
-              </td>
-              <td class="item_name"><a href="{% url 'reorder_level' instance.id %}">{{instance.reorder_level}}</a></td>
+              <td>{{instance.item_name}}</td>
+              <td>{{instance.quantity}}</td>
+              <td>{{instance.issue_quantity}}</td>
+              <td>{{instance.receive_quantity}}</td>
+              <td>{{instance.receive_by}}</td>
+              <td>{{instance.issue_by}}</td>
               <td>{{instance.last_updated|timezone:"Asia/Dhaka"|date:"N j, Y, g:i A"}}</td>
-              <td class="del_edit_btns">
+              <!-- <td class="del_edit_btns">
                 <a
                   class="update_btn"
                   href="{% url 'update_items' instance.id %}"
@@ -279,13 +268,11 @@
                   style="color: red"
                   >{% bs_icon 'trash' %}</a
                 >
-              </td>
+              </td> -->
             </tr>
             {% endfor %}
           </table>
         </div>
-
-        {% endif %}
       </div>
     </main>
 

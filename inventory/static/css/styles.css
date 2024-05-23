@@ -31,6 +31,10 @@ th {
   box-shadow: 12px 12px 20px 6px #2e6da4;
 } */
 
+.display_table .table tr .item_name a {
+  text-decoration-line: none;
+}
+
 .header {
   font-family: helvitica;
   color: #337ab7;
@@ -43,10 +47,19 @@ th {
 }
 
 /* Actions Buttons */
-.del_edit_btns {
+.del_edit_btns a {
   list-style: none;
+  text-decoration-line: none;
 }
 
 .del_edit_btns .update_btn {
   margin-right: 5px;
 }
+
+/* .success {
+  list-style: none;
+  background-color: #2e6da4;
+  color: white;
+  box-shadow: 12px 12px 12px #e61c66;
+  text-align: center;
+} */
