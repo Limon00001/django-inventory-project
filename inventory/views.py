@@ -29,7 +29,7 @@ def list_items(request):
         'title': title,
         'queryset': queryset,
         'form': form,
-        'show_alerts': False
+        'show_alerts': False,
     }
     if request.method == 'POST':
         queryset = Stock.objects.filter(category__icontains = form['category'].value(), item_name__icontains = form['item_name'].value())
@@ -227,10 +227,40 @@ def my_protected_view(request):
 @login_required
 # List History
 def list_history(request):
-    title = 'List of Items'
+    title = 'Items History'
     queryset = StockHistory.objects.all()
+    form = StockSearchForm(request.POST or None)
     context = {
         'title': title,
         'queryset': queryset,
+        'form': form,
+        'show_alerts': False
     }
+    if request.method == 'POST':
+        category = form['category'].value
+        # queryset = StockHistory.objects.filter(item_name__icontains = form['item_name'].value())
+        queryset = Stock.objects.filter(category__icontains = form['category'].value(), item_name__icontains = form['item_name'].value())
+        # if category != '':
+        #     queryset = queryset.filter(category_id = category)
+
+        if form['export_to_csv'].value() == True:
+            response = HttpResponse(content_type = 'text/csv')
+            response['Content-Disposition'] = 'attachment; filename = "Items History.csv"'
+            writer = csv.writer(response)
+            writer.writerow(['CATEGORY', 'ITEM NAME', 'QUANTITY', 'ISSUE QUANTITY', 'RECEIVE QUANTITY', 'RECEIVE BY', 'ISSUE BY', 'LAST UPDATED'])
+            instance = queryset
+            for items in instance:
+                writer.writerow([items.category, items.item_name, items.quantity, items.issue_quantity, items.receive_quantity, items.receive_by, items.issue_by, items.last_updated])
+            return response
+        
+        context = {
+            'form': form,
+            'title': title,
+            'queryset': queryset
+        }
+        if not queryset.exists():
+            context['show_alert'] = True,
+            messages.warning(request, 'No items found matching the search criteria.')
+        else:
+            context['queryset'] = queryset
     return render(request, 'list_history.html', context)

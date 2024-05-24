@@ -219,10 +219,16 @@
     <main class="container">
       <div class="bg-body-secondary p-5 rounded">
         <h1>{{title}}</h1>
-        <form action="" method="POST">
-          {% csrf_token %} {{form|crispy}}
-          <input class="btn btn-primary" type="submit" value="Save" />
-        </form>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="display-table">
+              <form action="" method="POST">
+                {% csrf_token %} {{form|crispy}}
+                <input class="btn btn-primary" type="submit" value="Save" />
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 

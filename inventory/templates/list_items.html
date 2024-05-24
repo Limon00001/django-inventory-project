@@ -218,7 +218,7 @@
 
     <main class="container">
       {% if messages %}
-      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+      <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
         {% for message in messages %}
         <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
         {% endfor %}
@@ -227,18 +227,27 @@
       {% endif %}
       <div class="bg-body-secondary p-5 rounded">
         <div class="header">{{title}}</div>
-        <form method="POST" action="">
-          {% csrf_token %} {{form|crispy}}
-          <input class="btn btn-primary" type="submit" value="Search" />
-        </form>
+        <div class="row">
+          <div class="col-sm-2">
+            <form method="POST" action="">
+              {% csrf_token %} {{form|crispy}}
+              <input class="btn btn-primary w-100" type="submit" value="Search" />
+            </form>
+            <br /><br />
+            <a href="/add_items"><div class="btn btn-primary w-100">Add Items</div></a><br /><br />
+            <a href="/list_history"><div class="btn btn-primary w-100">History</div></a><br /><br />
+          </div>
         <br />
         {% if show_alert %}
-        <div class="alert alert-warning" role="alert">
+        <!-- <div class="alert alert-warning" role="alert">
           No items found matching the search criteria.
-        </div>
+        </div> -->
+        <div></div>
         {% elif queryset %}
+
+        <div class="col-sm-10">
         <div class="display_table">
-          <table class="table">
+          <table class="table" id="list_items_table">
             <thead>
               <tr>
                 <th>COUNT</th>
@@ -284,10 +293,18 @@
             {% endfor %}
           </table>
         </div>
+      </div>
+      </div>
 
         {% endif %}
       </div>
     </main>
+
+    <!-- Jquery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <!-- Table-Pagination -->
+    <script src="{% static 'js/pagination/table-pagination.js' %}"></script>
 
     <!-- COlor-Mode JS -->
     <!-- {% load static %} -->
@@ -295,5 +312,9 @@
 
     <!-- {% load static %} -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- {% load static %} -->
+    <!-- Custom JS -->
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

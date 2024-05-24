@@ -217,20 +217,37 @@
     {% include 'navbar.html' %}
 
     <main class="container">
-      {% if messages %}
+      <!-- {% if messages %}
       <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         {% for message in messages %}
         <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
         {% endfor %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      {% endif %}
+      {% endif %} -->
       <div class="bg-body-secondary p-5 rounded">
         <div class="header">{{title}}</div>
         <br />
-
+        <form method="POST" action="">
+          {% csrf_token %} {{form|crispy}}
+          <input class="btn btn-primary" type="submit" value="Search" />
+        </form>
+        <br>
+        {% if show_alert %}
+        <!-- <div class="alert alert-warning" role="alert">
+          No items found matching the search criteria.
+        </div> -->
+        {% if messages %}
+      <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        {% for message in messages %}
+        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+        {% elif queryset %}
         <div class="display_table">
-          <table class="table">
+          <table class="table" id="items_history">
             <thead>
               <tr>
                 <th>COUNT</th>
@@ -273,8 +290,18 @@
             {% endfor %}
           </table>
         </div>
+        {% endif %}
       </div>
     </main>
+
+    <!-- Jquery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <!-- Table-Pagination -->
+    <script src="{% static 'js/pagination/paging.js' %}"></script>
+
+    <!-- Jquery UI -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
     <!-- COlor-Mode JS -->
     <!-- {% load static %} -->
@@ -282,5 +309,9 @@
 
     <!-- {% load static %} -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- {% load static %} -->
+    <!-- Custom JS -->
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
