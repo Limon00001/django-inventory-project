@@ -1,4 +1,4 @@
-{% load static %} {% load crispy_forms_tags %} {% load bootstrap_icons %}
+{% load static %} {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
@@ -24,6 +24,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
     />
+
+    <!-- Fontawesone -->
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap CSS -->
     <!-- {% load static %} -->
@@ -220,7 +224,7 @@
       {% if messages %}
       <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         {% for message in messages %}
-        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
+        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}><i class="fa-regular fa-circle-check fa-lg"></i> {{ message }}</strong>
         {% endfor %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>

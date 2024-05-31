@@ -1,4 +1,4 @@
-{% load static %} {% load crispy_forms_tags %} {% load bootstrap_icons %} {% load tz %}
+{% load static %} {% load crispy_forms_tags %} {% load tz %}
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
@@ -24,6 +24,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
     />
+
+    <!-- Fontawesone -->
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap CSS -->
     <!-- {% load static %} -->
@@ -217,14 +221,6 @@
     {% include 'navbar.html' %}
 
     <main class="container">
-      <!-- {% if messages %}
-      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        {% for message in messages %}
-        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
-        {% endfor %}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endif %} -->
       <div class="bg-body-secondary p-5 rounded">
         <div class="header">{{title}}</div>
         <br />
@@ -240,7 +236,7 @@
         {% if messages %}
       <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
         {% for message in messages %}
-        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% bs_icon 'patch-check' %}{{ message }}</strong>
+        <strong{% if message.tags %} class="{{ message.tags }}"{% endif %}><i class="fa-regular fa-circle-check fa-lg"></i> {{ message }}</strong>
         {% endfor %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -272,20 +268,6 @@
               <td>{{instance.receive_by}}</td>
               <td>{{instance.issue_by}}</td>
               <td>{{instance.last_updated|timezone:"Asia/Dhaka"|date:"N j, Y, g:i A"}}</td>
-              <!-- <td class="del_edit_btns">
-                <a
-                  class="update_btn"
-                  href="{% url 'update_items' instance.id %}"
-                  style="color: rgb(0, 51, 255)"
-                  >{% bs_icon 'pencil-square' %}</a
-                >
-                <a
-                  class="delete_btn"
-                  href="{% url 'delete_items' instance.id %}"
-                  style="color: red"
-                  >{% bs_icon 'trash' %}</a
-                >
-              </td> -->
             </tr>
             {% endfor %}
           </table>
